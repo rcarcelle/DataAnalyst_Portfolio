@@ -16,7 +16,8 @@ Here's a brief overview of the projects included in this portfolio:
 The projects in this portfolio were developed using various technologies and tools, including:
 
 - Python (Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn...)
-- Power BI Desktop
+- SQL (MySQL)
+- Power BI (Desktop)
 - Jupyter Notebook
 
 ## About Me
