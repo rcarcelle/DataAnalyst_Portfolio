@@ -1,4 +1,4 @@
-# DataAnalyst_Portfolio_RafaelCarcelle
+# DataAnalyst_Portfolio_RafaelCarcellé
 This is a collection of data analysis projects that demonstrate my skills and experience as a data analyst. The projects cover a wide range of topics, from data cleaning and wrangling to exploratory data analysis, predictive modeling, and data visualization.
 
 ## Projects
