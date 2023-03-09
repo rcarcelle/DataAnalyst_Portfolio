@@ -6,7 +6,7 @@ Here's a brief overview of the projects included in this portfolio:
 
 - **Project 1:** Johns Hopkins COVID-19 dataset. EDA + Visualization
 
-- **Project 2:**...
+- **Project 2:** Model Tournament for Microsoft Malware dataset
 
 - **Project 3:**...
 
