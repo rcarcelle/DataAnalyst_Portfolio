@@ -8,7 +8,7 @@ Here's a brief overview of the projects included in this portfolio:
 
 - **Project 2:** Model Tournament for Microsoft Malware dataset
 
-- **Project 3:**...
+- **Project 3:** CIFAR10 Neural Network
 
 ## Technologies and Tools
 The projects in this portfolio were developed using various technologies and tools, including:
