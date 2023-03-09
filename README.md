@@ -4,13 +4,11 @@ This is a collection of data analysis projects that demonstrate my skills and ex
 ## Projects
 Here's a brief overview of the projects included in this portfolio:
 
-- **Project 1:**...
+- **Project 1:** Johns Hopkins COVID-19 dataset. EDA + Visualization
 
 - **Project 2:**...
 
 - **Project 3:**...
-
-- **Project 4:**...
 
 ## Technologies and Tools
 The projects in this portfolio were developed using various technologies and tools, including:
