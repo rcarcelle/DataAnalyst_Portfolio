@@ -10,6 +10,8 @@ Here's a brief overview of the projects included in this portfolio:
 
 - **Project 3:** CIFAR10 Neural Network
 
+- **Project 4:** Final Project for my Data Science master (Soon...)
+
 ## Technologies and Tools
 The projects in this portfolio were developed using various technologies and tools, including:
 
