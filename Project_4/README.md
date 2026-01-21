@@ -14,9 +14,9 @@ Sales_Analytics_Dashboard/
 ## 📈 Report Pages
 | Page | Description |
 |------|-------------|
-| Site Mapping | Executive dashboard with main KPIs |
-| Cust Mapping | Customer analysis and segmentation |
-| Letter Mockup | Product performance and categories |
+| Overview | Executive dashboard with main KPIs |
+| Customer Analysis | Customer analysis and segmentation |
+| Product Analysis | Product performance and categories |
 
 ## 📐 Data Model
 
@@ -68,7 +68,8 @@ Sales_Analytics_Dashboard/
 4. Refresh data
 
 ## 👤 Author
-[Your Name]
+Rafael Carcellé Santel
 
 ## 📅 Last Updated
 January 2026
+
