@@ -10,7 +10,7 @@ Here's a brief overview of the projects included in this portfolio:
 
 - **Project 3:** CIFAR10 Neural Network
 
-- **Project 4:** Final Project for my Data Science master (Soon...)
+- **Project 4:** Power BI Dashboard about Sales Analytics
 
 ## Technologies and Tools
 The projects in this portfolio were developed using various technologies and tools, including:
