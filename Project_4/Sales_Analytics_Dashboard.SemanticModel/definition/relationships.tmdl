@@ -1,0 +1,35 @@
+relationship 0f6f4a10-9a68-4722-b5f3-fddef6da156c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimCustomer.SignupDate
+	toColumn: LocalDateTable_071d0dcd-af46-4cd5-8185-a06461f15c91.Date
+
+relationship fc866242-7c9e-4a1f-a68b-7788caaf13ba
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.Date
+	toColumn: LocalDateTable_237a5962-4b8f-4d78-94ef-b7d7135c0a44.Date
+
+relationship 453b3e4e-5b7f-49d4-bcb8-596bc4e966ec
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimEmployee.HireDate
+	toColumn: LocalDateTable_a347f696-6afb-4b3c-b2df-cfd54956dbbc.Date
+
+relationship AutoDetected_5dd26e44-c5a4-467a-8511-8598d8d80059
+	fromColumn: FactSales.CustomerKey
+	toColumn: DimCustomer.CustomerKey
+
+relationship AutoDetected_1d925416-14db-44af-a6d2-d93a220bbef9
+	fromColumn: FactSales.GeographyKey
+	toColumn: DimGeography.GeographyKey
+
+relationship AutoDetected_234d524a-9a66-435e-aa54-044f4762e783
+	fromColumn: FactSales.EmployeeKey
+	toColumn: DimEmployee.EmployeeKey
+
+relationship AutoDetected_7cc68764-2e67-4180-9dc8-3e4421738b94
+	fromColumn: FactSales.ProductKey
+	toColumn: DimProduct.ProductKey
+
+relationship bc1a8012-882c-5837-b149-01985dad4586
+	fromColumn: FactSales.OrderDateKey
+	toColumn: DimDate.DateKey
+

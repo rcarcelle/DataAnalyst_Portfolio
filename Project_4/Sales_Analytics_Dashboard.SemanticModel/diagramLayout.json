@@ -1,0 +1,100 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 768.17428761459325,
+            "y": 861.23649725717542
+          },
+          "nodeIndex": "DimCustomer",
+          "nodeLineageTag": "cfb3b964-76a8-4186-a1bf-bdc89c18d658",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1029.0360071399791,
+            "y": 342.071876269805
+          },
+          "nodeIndex": "DimDate",
+          "nodeLineageTag": "88a625dd-4ca5-44d2-b030-39c1e8444d4c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 223.99461793484443
+          },
+          "nodeIndex": "DimEmployee",
+          "nodeLineageTag": "d9ed6c94-7c2c-4bd6-8d67-0f267b7280df",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 91.582943834589457,
+            "y": 761.58771212037777
+          },
+          "nodeIndex": "DimGeography",
+          "nodeLineageTag": "342beb23-c92e-45e9-8db5-f5fce66569be",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 479.10403525221648,
+            "y": -50
+          },
+          "nodeIndex": "DimProduct",
+          "nodeLineageTag": "09f6ed8d-b43e-4399-9919-8bc35964cc75",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 458.3121883476885,
+            "y": 419.6065085120411
+          },
+          "nodeIndex": "FactSales",
+          "nodeLineageTag": "8bf44bdd-26d4-4203-8761-3a8c4b782c35",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 63.287087723234038,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

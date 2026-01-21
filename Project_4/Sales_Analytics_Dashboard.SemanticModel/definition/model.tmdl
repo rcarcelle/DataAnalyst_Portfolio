@@ -1,0 +1,27 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["DimCustomer","DimDate","DimEmployee","DimGeography","DimProduct","FactSales"]
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table DimCustomer
+ref table DateTableTemplate_47bdcacc-ad13-4197-8050-884e4b1381a2
+ref table LocalDateTable_071d0dcd-af46-4cd5-8185-a06461f15c91
+ref table DimDate
+ref table LocalDateTable_237a5962-4b8f-4d78-94ef-b7d7135c0a44
+ref table DimEmployee
+ref table LocalDateTable_a347f696-6afb-4b3c-b2df-cfd54956dbbc
+ref table DimGeography
+ref table DimProduct
+ref table FactSales
+
+ref cultureInfo en-US
+

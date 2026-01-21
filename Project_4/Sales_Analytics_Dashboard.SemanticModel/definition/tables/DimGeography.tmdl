@@ -1,0 +1,50 @@
+table DimGeography
+	lineageTag: 342beb23-c92e-45e9-8db5-f5fce66569be
+
+	column GeographyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 157734a6-f167-4f56-a2b6-d1db0403e1ff
+		summarizeBy: none
+		sourceColumn: GeographyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 834bbe73-ab2c-4f96-b567-f17d6e313668
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 9c6c404c-382e-4449-b4ae-e8e40f2bf636
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 9b95dd2e-001d-45c7-9fbd-863df09992de
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimGeography = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\CaRa801\OneDrive - HP Inc\Documents\PowerBI_Portfolio\data\DimGeography.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"GeographyKey", Int64.Type}, {"Country", type text}, {"Region", type text}, {"City", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,338 @@
+table FactSales
+	lineageTag: 8bf44bdd-26d4-4203-8761-3a8c4b782c35
+
+	measure 'Total Revenue' = SUM(FactSales[SalesAmount])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: a44e128d-f2d9-443f-b901-802497196f7c
+
+	/// Suma del profit real de todas las ventas
+	measure 'Total Profit' = SUM(FactSales[Profit])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 006f49c5-c119-4f14-9712-ed79ed0f224e
+
+	measure 'Profit Margin %' =
+			
+			DIVIDE([Total Profit], [Total Revenue]) * 100
+		lineageTag: ecfdb02d-070c-45ac-80f8-3d933a1091b7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Crecimiento de revenue año contra año
+	measure 'Revenue YoY Growth %' = ```
+			
+			VAR CurrentYearRevenue = [Total Revenue]
+			VAR PreviousYearRevenue = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR(DimDate[Date]))
+			RETURN 
+			    DIVIDE(CurrentYearRevenue - PreviousYearRevenue, PreviousYearRevenue, 0) * 100
+			```
+		formatString: 0.00
+		lineageTag: c69595b3-e83a-46b6-a7ee-16d422883c16
+
+	measure 'Total Orders' = DISTINCTCOUNT(FactSales[SalesKey])
+		formatString: 0
+		lineageTag: 7492af3c-bdaa-452b-be6e-569dc39fd638
+
+	measure 'Avg Order Value' = DIVIDE([Total Revenue], [Total Orders])
+		lineageTag: 24decdf2-9c18-44f5-83fb-c6d3beedebee
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Active Customers' = DISTINCTCOUNT(FactSales[CustomerKey])
+		formatString: 0
+		lineageTag: 8747d997-d2ca-41d1-af1c-f2fc0f54107d
+
+	/// Valor promedio de revenue por cliente
+	measure 'Customer Lifetime Value' =
+			
+			DIVIDE([Total Revenue], [Active Customers], 0)
+		lineageTag: 7b4ff878-5198-4965-aecf-21378abf55c2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue by Region' =
+			
+			CALCULATE(
+			    [Total Revenue],
+			    ALLEXCEPT(DimGeography, DimGeography[Region])
+			)
+		lineageTag: 4340ad4c-5924-446a-9a73-babea8bc5762
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Revenue de las top 3 categorías de productos
+	measure 'Top 3 Categories Revenue' =
+			
+			CALCULATE(
+			    [Total Revenue],
+			    TOPN(3, ALL(DimProduct[Category]), CALCULATE([Total Revenue]), DESC)
+			)
+		lineageTag: 00ccaf8e-cc64-4ee0-8e2a-1c2c6850cc2c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Crecimiento de revenue mes contra mes
+	measure 'Revenue MoM %' = ```
+			
+			VAR CurrentMonthRevenue = [Total Revenue]
+			VAR PreviousMonthRevenue = CALCULATE([Total Revenue], PREVIOUSMONTH(DimDate[Date]))
+			RETURN 
+			    DIVIDE(CurrentMonthRevenue - PreviousMonthRevenue, PreviousMonthRevenue, 0) * 100
+			```
+		formatString: 0.00
+		lineageTag: 2a08fecc-b508-4196-8a75-7b40546d174e
+
+	/// Suma total del costo de ventas
+	measure 'Total Cost' = SUM(FactSales[TotalCost])
+		formatString: #,##0.00
+		lineageTag: cd0c2520-0b31-48ea-943b-0ff2a0ef6200
+
+	/// Suma total de unidades vendidas
+	measure 'Total Quantity' = SUM(FactSales[Quantity])
+		formatString: #,##0
+		lineageTag: d186c1ba-ef60-4026-8af1-a6154f978063
+
+	/// Descuento promedio aplicado
+	measure 'Avg Discount' = AVERAGE(FactSales[Discount])
+		formatString: 0.00%
+		lineageTag: 7317f7ca-ba71-4852-84b3-5ed5772ec954
+
+	/// Número de productos únicos vendidos
+	measure 'Products Sold' = DISTINCTCOUNT(FactSales[ProductKey])
+		formatString: #,##0
+		lineageTag: ddc017a0-4825-4578-9689-1aaf76fe7ed0
+
+	/// Revenue del año actual
+	measure 'Revenue YTD' = CALCULATE([Total Revenue], DATESYTD(DimDate[Date]))
+		formatString: #,##0.00
+		lineageTag: 0df46122-1829-4be0-97d0-57a47445780b
+
+	/// Profit del año actual
+	measure 'Profit YTD' = CALCULATE([Total Profit], DATESYTD(DimDate[Date]))
+		formatString: #,##0.00
+		lineageTag: 190fb439-82b8-40ab-86e9-a686ea2b4f1d
+
+	/// Revenue del mismo periodo del año anterior
+	measure 'Revenue LY' = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR(DimDate[Date]))
+		formatString: #,##0.00
+		lineageTag: 3446c095-fd04-4ed9-b337-f01df83a2a78
+
+	/// Profit del mismo periodo del año anterior
+	measure 'Profit LY' = CALCULATE([Total Profit], SAMEPERIODLASTYEAR(DimDate[Date]))
+		formatString: #,##0.00
+		lineageTag: 5c57f2c4-dcd1-4e6c-b2e1-a94c4ad1f129
+
+	/// Porcentaje del margen de profit sobre costo
+	measure 'Profit Over Cost %' = DIVIDE([Total Profit], [Total Cost], 0) * 100
+		formatString: 0.00
+		lineageTag: e33b0d7b-2d65-4454-8d21-b148c3acb251
+
+	/// Revenue promedio por día
+	measure 'Avg Daily Revenue' =
+			
+			DIVIDE(
+			    [Total Revenue],
+			    DISTINCTCOUNT(DimDate[Date]),
+			    0
+			)
+		formatString: #,##0.00
+		lineageTag: e1974b42-38a0-4bc2-ac4e-dcd1c2fb43c3
+
+	/// Número de nuevos clientes
+	measure 'New Customers' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(DimCustomer[CustomerKey]),
+			    FILTER(
+			        DimCustomer,
+			        DimCustomer[SignupDate] >= MIN(DimDate[Date]) &&
+			        DimCustomer[SignupDate] <= MAX(DimDate[Date])
+			    )
+			)
+		formatString: 0
+		lineageTag: d5638796-a372-48a5-9ba7-b47f3e102763
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Revenue por empleado
+	measure 'Revenue per Employee' = DIVIDE([Total Revenue], DISTINCTCOUNT(FactSales[EmployeeKey]), 0)
+		formatString: #,##0.00
+		lineageTag: d44c119f-92aa-4acc-9a66-a6f4ba7805aa
+
+	/// Ranking de productos por revenue
+	measure 'Product Rank' =
+			
+			IF(
+			    HASONEVALUE(DimProduct[ProductName]),
+			    RANKX(
+			        ALL(DimProduct[ProductName]),
+			        [Total Revenue],,DESC,Dense
+			    )
+			)
+		formatString: #,##0
+		lineageTag: 5a70d64a-a216-47cc-9910-de2c3f3f96cc
+
+	/// Porcentaje del total de revenue
+	measure 'Revenue % of Total' = DIVIDE([Total Revenue], CALCULATE([Total Revenue], ALL(FactSales)), 0)
+		formatString: 0.00%
+		lineageTag: b7508da9-0ee5-488e-b5de-b167bb796a4f
+
+	column SalesKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 38d4cd2c-61b5-4560-bc61-28987728770c
+		summarizeBy: count
+		sourceColumn: SalesKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: aa33c5e8-d286-4166-bddf-7a91470f2acf
+		summarizeBy: none
+		sourceColumn: OrderDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipDateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: d14a1562-fd76-492c-8556-2efa115af25f
+		summarizeBy: count
+		sourceColumn: ShipDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 9270f0b5-8431-4f09-b247-2519cb010f6d
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: a82ce872-4ce6-4c7a-961f-b37f976719b0
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeKey
+		dataType: int64
+		formatString: 0
+		lineageTag: b00b7026-40ff-4697-943d-fb433656d3b9
+		summarizeBy: none
+		sourceColumn: EmployeeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeographyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f11a487-0c81-4ca6-810d-e0dcbccb5fdd
+		summarizeBy: none
+		sourceColumn: GeographyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ee40858-58a0-410e-8b51-0743d4258324
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		lineageTag: 4f7a6b9a-4c5d-4184-9edc-9031e934144d
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Discount
+		dataType: double
+		lineageTag: 95c4d46e-c8f0-46d5-ab98-4c773272d7a1
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesAmount
+		dataType: double
+		lineageTag: 4dd7f842-258a-47a2-a5fd-b655c0054838
+		summarizeBy: sum
+		sourceColumn: SalesAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalCost
+		dataType: double
+		lineageTag: 41f987b5-e602-4d2f-b661-ec7b4c22924b
+		summarizeBy: sum
+		sourceColumn: TotalCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Profit
+		dataType: double
+		lineageTag: cf8c900b-e7a5-45a8-afc0-004135ff8d33
+		summarizeBy: sum
+		sourceColumn: Profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Channel
+		dataType: string
+		lineageTag: ee10d5af-f126-45f1-ae73-9c1f89c96285
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentMethod
+		dataType: string
+		lineageTag: 1450dc58-d0a0-4a05-9321-031c118e55fb
+		summarizeBy: none
+		sourceColumn: PaymentMethod
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderPriority
+		dataType: string
+		lineageTag: 76e65e94-ccba-49d8-ad9e-b8c5b9276c1a
+		summarizeBy: none
+		sourceColumn: OrderPriority
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactSales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\CaRa801\OneDrive - HP Inc\Documents\PowerBI_Portfolio\data\FactSales.csv"),[Delimiter=",", Columns=16, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"SalesKey", Int64.Type}, {"OrderDateKey", Int64.Type}, {"ShipDateKey", Int64.Type}, {"ProductKey", Int64.Type}, {"CustomerKey", Int64.Type}, {"EmployeeKey", Int64.Type}, {"GeographyKey", Int64.Type}, {"Quantity", Int64.Type}, {"UnitPrice", type number}, {"Discount", type number}, {"SalesAmount", type number}, {"TotalCost", type number}, {"Profit", type number}, {"Channel", type text}, {"PaymentMethod", type text}, {"OrderPriority", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

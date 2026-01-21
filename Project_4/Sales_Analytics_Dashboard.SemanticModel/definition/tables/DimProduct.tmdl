@@ -1,0 +1,86 @@
+table DimProduct
+	lineageTag: 09f6ed8d-b43e-4399-9919-8bc35964cc75
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 9fe7bc90-bbe1-4037-884d-bea73d19d37b
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: b541840d-0d96-437a-97f7-7c4c350f82b3
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 9f4e7049-34e6-40cf-b96e-8bc4a427e9be
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubCategory
+		dataType: string
+		lineageTag: 34b2a889-d06d-468d-9c16-bc9b123c70e1
+		summarizeBy: none
+		sourceColumn: SubCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column Color
+		dataType: string
+		lineageTag: c37f0a3f-7d99-4cf9-9eca-f7dbcc8bb587
+		summarizeBy: none
+		sourceColumn: Color
+
+		annotation SummarizationSetBy = Automatic
+
+	column Size
+		dataType: string
+		lineageTag: 2fa873f1-32a3-4cc8-9e2d-1442d2db3815
+		summarizeBy: none
+		sourceColumn: Size
+
+		annotation SummarizationSetBy = Automatic
+
+	column StandardCost
+		dataType: double
+		lineageTag: 4655ec91-96f7-4a55-89f3-37c0246b2583
+		summarizeBy: none
+		sourceColumn: StandardCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ListPrice
+		dataType: double
+		lineageTag: f3021fd1-8958-4e03-a1ad-e6686a8236cb
+		summarizeBy: none
+		sourceColumn: ListPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimProduct = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\CaRa801\OneDrive - HP Inc\Documents\PowerBI_Portfolio\data\DimProduct.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductKey", Int64.Type}, {"ProductName", type text}, {"Category", type text}, {"SubCategory", type text}, {"Color", type text}, {"Size", type text}, {"StandardCost", type number}, {"ListPrice", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

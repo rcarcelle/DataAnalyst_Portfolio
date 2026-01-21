@@ -1,0 +1,67 @@
+table DimEmployee
+	lineageTag: d9ed6c94-7c2c-4bd6-8d67-0f267b7280df
+
+	column EmployeeKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e33bc8f-ad5d-4c32-8b46-57ace8024a58
+		summarizeBy: none
+		sourceColumn: EmployeeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeName
+		dataType: string
+		lineageTag: 39abc376-273b-42f0-8a02-3ed230d5fd20
+		summarizeBy: none
+		sourceColumn: EmployeeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column HireDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1b7698e8-6de6-415a-b08b-ca1e0e6a396f
+		summarizeBy: none
+		sourceColumn: HireDate
+
+		variation Variation
+			isDefault
+			relationship: 453b3e4e-5b7f-49d4-bcb8-596bc4e966ec
+			defaultHierarchy: LocalDateTable_a347f696-6afb-4b3c-b2df-cfd54956dbbc.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Role
+		dataType: string
+		lineageTag: 9ee5c210-ff3e-42fa-879d-fc25d65d8f14
+		summarizeBy: none
+		sourceColumn: Role
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeographyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 31ac2f6b-467e-4469-8d9d-391b112e56ae
+		summarizeBy: count
+		sourceColumn: GeographyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimEmployee = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\CaRa801\OneDrive - HP Inc\Documents\PowerBI_Portfolio\data\DimEmployee.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"EmployeeKey", Int64.Type}, {"EmployeeName", type text}, {"HireDate", type date}, {"Role", type text}, {"GeographyKey", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,92 @@
+table DimCustomer
+	lineageTag: cfb3b964-76a8-4186-a1bf-bdc89c18d658
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f748cfd-64e3-4814-9379-f1e42fde89f3
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerName
+		dataType: string
+		lineageTag: ec3997e6-3369-4262-8418-8dfe7b96ea9a
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: 0fd8a298-0493-4336-8b4e-a1fae6961e46
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Phone
+		dataType: int64
+		formatString: 0
+		lineageTag: 39b4d0ea-18dd-40c2-a18f-940fa2ba1829
+		summarizeBy: sum
+		sourceColumn: Phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column SignupDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 3fe54c01-11d1-4c35-beb8-8c8552a19127
+		summarizeBy: none
+		sourceColumn: SignupDate
+
+		variation Variation
+			isDefault
+			relationship: 0f6f4a10-9a68-4722-b5f3-fddef6da156c
+			defaultHierarchy: LocalDateTable_071d0dcd-af46-4cd5-8185-a06461f15c91.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column GeographyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 58bd8c1a-2895-422b-8e23-9a4d7fc00de5
+		summarizeBy: count
+		sourceColumn: GeographyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column LoyaltyTier
+		dataType: string
+		lineageTag: 621e30b4-e8fd-4bf5-874a-b4d9b8d43b2b
+		summarizeBy: none
+		sourceColumn: LoyaltyTier
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 9e6ba8b1-5f99-450f-b73e-10b2431bedfa
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCustomer = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\CaRa801\OneDrive - HP Inc\Documents\PowerBI_Portfolio\data\DimCustomer.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerKey", Int64.Type}, {"CustomerName", type text}, {"Email", type text}, {"Phone", Int64.Type}, {"SignupDate", type date}, {"GeographyKey", Int64.Type}, {"LoyaltyTier", type text}, {"Gender", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
